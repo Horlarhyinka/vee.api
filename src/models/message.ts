@@ -15,7 +15,8 @@ const messageSchema = new mongoose.Schema<message_int>({
     timestamp: {
         sentAt: {type: Date, default: Date.now()},
         readAt: {type: Date, default: null}
-    }
+    },
+    sentBy: {type:String}
 })
 
 export default messageSchema;

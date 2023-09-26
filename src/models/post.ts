@@ -6,7 +6,15 @@ const postSchema = new mongoose.Schema<post_int>({
     body: { type: String },
     file: { type: fileSchema},
     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
-    replyTo: { type: String }
+    replyTo: { type: String },
+    comments: {
+        type: [String],
+        default: []
+    },
+    likes: {
+        type: [String],
+        default: []
+    }
 },{ timestamps: true})
 
 export default mongoose.model("post", postSchema)

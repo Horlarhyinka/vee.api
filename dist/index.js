@@ -14,11 +14,12 @@ const socket_1 = __importDefault(require("./services/socket"));
 const chat_1 = __importDefault(require("./routes/chat"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const post_1 = __importDefault(require("./routes/post"));
+const user_1 = __importDefault(require("./routes/user"));
 const app = (0, express_1.default)();
 const server = (0, http_1.createServer)(app);
 //using middlewares
 app.use((0, cors_1.default)({
-    origin: ["http://localhost:3000"]
+    origin: ["http://localhost:3000", "http://localhost:3001"]
 }));
 app.use((0, helmet_1.default)());
 app.use((0, express_rate_limit_1.default)({
@@ -32,6 +33,7 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use("/api/v1/auth", auth_1.default);
 app.use("/api/v1/chats", chat_1.default);
 app.use("/api/v1/posts", post_1.default);
+app.use("/api/v1/users", user_1.default);
 function start() {
     (0, connectDB_1.default)().then(() => {
         console.log("connected to db");

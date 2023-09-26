@@ -18,6 +18,7 @@ const messageSchema = new mongoose_1.default.Schema({
     timestamp: {
         sentAt: { type: Date, default: Date.now() },
         readAt: { type: Date, default: null }
-    }
+    },
+    sentBy: { type: String }
 });
 exports.default = messageSchema;

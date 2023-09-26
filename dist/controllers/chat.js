@@ -58,8 +58,11 @@ exports.deleteChat = (0, catchAsyncErrors_1.default)((req, res) => __awaiter(voi
     }
 }));
 exports.getChats = (0, catchAsyncErrors_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield req.user.populate("chats");
-    return res.status(200).json({ message: "successful", data: user.chats });
+    const user = yield req.user.populate(["chats"]);
+    const populated = yield Promise.all(user.chats.map((chat) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield chat.populate("friend");
+    })));
+    return res.status(200).json({ message: "successful", data: populated });
 }));
 exports.getChat = (0, catchAsyncErrors_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const chatId = req.params.chatId;
@@ -69,5 +72,7 @@ exports.getChat = (0, catchAsyncErrors_1.default)((req, res) => __awaiter(void 0
     const indx = user.chats.findIndex(chat => String(chat._id) === String(chatId));
     if (indx < 0)
         return res.status(404).json({ message: "chat not found" });
-    return res.status(200).json({ message: "successful", data: user.chats[indx] });
+    const target = yield user.chats[indx].populate("friend");
+    target.friend.password = "";
+    return res.status(200).json({ message: "successful", data: target });
 }));

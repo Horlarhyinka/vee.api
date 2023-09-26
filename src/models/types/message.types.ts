@@ -4,6 +4,7 @@ export interface message_int extends Document{
     timestamp: timestamp_type
     body?: string
     file?: file_int
+    sentBy: string
 }
 
 export interface file_int extends Document{

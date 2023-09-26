@@ -5,6 +5,8 @@ import { user_ref_type } from "./user.types";
 export interface post_int extends message_int{
     postedBy: user_ref_type
     replyTo?: string | ObjectId
+    likes: string[]
+    comments: string[]
 }
 
 export type post_ref_type = string | post_int | ObjectId

@@ -26,7 +26,9 @@ const userSchema = new mongoose_1.default.Schema({
     token: { type: String },
     tokenExpiresIn: { type: Date },
     online: { type: Boolean, default: false },
-    socketId: { type: String, }
+    socketId: { type: String, default: undefined },
+    about: { type: String },
+    avatar: { type: String },
 });
 userSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
