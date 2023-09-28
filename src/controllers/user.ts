@@ -23,7 +23,6 @@ export const getUsers = catchAsyncErrors(async(req: ExtReq, res: Response)=>{
         }
         return passed;
     })
-    
     return res.status(200).json({message: "successful", data: not_friends})
 })
 

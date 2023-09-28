@@ -34,7 +34,7 @@ interface server_to_client_events{
 }
 
 interface interserver_events{
-
+    
 }
 
 interface socket_data{
@@ -106,13 +106,13 @@ export default (server: Server) =>{
             const targetChat = user.chats.find(c=>String(c)=== String(data.chatId))
             if(!targetChat)return emitError(new Error("chat not found"))
             const chat = await Chat.findById(targetChat)
-            chat?.messages.forEach(message=>{
-                if(!message.timestamp.readAt){
-                    message.timestamp.readAt = Date.now()
-                }
-            })
-            await chat?.save()
-            socket.to(String(data.chatId)).emit("read", {chatId: data.chatId})
+            for(let i = chat!.messages.length - 1; i > 0; i--){
+                if(chat!.messages[i].timestamp.readAt)break;;
+                chat!.messages[i].timestamp.readAt = Date.now()
+            }
+
+            socket.to(String(chat!._id)).emit("read", {chatId: data.chatId})
+            console.log("read emitted")
         })
 
         socket.on("post",async(data: post_type)=>{
