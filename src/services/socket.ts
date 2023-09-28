@@ -112,7 +112,6 @@ export default (server: Server) =>{
             }
 
             socket.to(String(chat!._id)).emit("read", {chatId: data.chatId})
-            console.log("read emitted")
         })
 
         socket.on("post",async(data: post_type)=>{
