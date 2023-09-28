@@ -11,13 +11,16 @@ import chatRouter from "./routes/chat"
 import authRouter from "./routes/auth";
 import postRouter from "./routes/post";
 import userRouter from "./routes/user";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app: express.Application = express();
 const server = createServer(app);
 
 //using middlewares
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"]
+    origin: ["http://localhost:3000", String(process.env.CLIENT_URL)]
 }))
 app.use(helmet())
 app.use(rateLimit({
