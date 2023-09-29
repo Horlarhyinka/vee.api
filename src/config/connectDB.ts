@@ -3,4 +3,4 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-export default ()=> mongoose.connect(process.env.DB_URL!)
+export default ()=> mongoose.connect(String(process.env.DB_URL!))

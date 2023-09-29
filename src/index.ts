@@ -19,6 +19,7 @@ const app: express.Application = express();
 const server = createServer(app);
 
 //using middlewares
+// app.set("trust proxy", true)
 app.use(cors({
     origin: ["http://localhost:3000", String(process.env.CLIENT_URL)]
 }))
