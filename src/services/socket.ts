@@ -47,7 +47,7 @@ export default (server: Server) =>{
     try{
 
     const io = new SocketServer<client_to_server_events, server_to_client_events, interserver_events, socket_data>(server, {cors:{
-        origin: process.env.CLIENT_URL!
+        origin: process.env.NODE_ENV==="production"?String(process.env.CLIENT_URL): "http://localhost:3000"
     }})
     const ns:Namespace = io.of("/")
     const postsID = "0000.00.000.0000";

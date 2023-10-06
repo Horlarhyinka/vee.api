@@ -1,6 +1,7 @@
 import "express-async-errors";
-import express from "express";
-import { createServer } from "http";
+import express, {Request, Response, NextFunction} from "express";
+import { createServer } from "https";
+import fs from "fs"
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -12,16 +13,20 @@ import authRouter from "./routes/auth";
 import postRouter from "./routes/post";
 import userRouter from "./routes/user";
 import dotenv from "dotenv"
+import path from "path";
 
 dotenv.config()
 
 const app: express.Application = express();
-const server = createServer(app);
+const server = createServer({
+    key: fs.readFileSync(path.resolve(__dirname, "../cert/key.pem")),
+    cert: fs.readFileSync(path.resolve(__dirname, "../cert/cert.pem")),
+},app);
 
-//using middlewares
-// app.set("trust proxy", true)
+app.set("trust proxy", false)
+
 app.use(cors({
-    origin: ["http://localhost:3000", String(process.env.CLIENT_URL)]
+    origin: process.env.NODE_ENV==="production"?String(process.env.CLIENT_URL): "http://localhost:3000"
 }))
 app.use(helmet())
 app.use(rateLimit({
@@ -29,11 +34,11 @@ app.use(rateLimit({
     max: 150,
     message: "too many requests, slow down..."
 }))
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 useSocket(server)
-
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/chats", chatRouter)
 app.use("/api/v1/posts", postRouter)
