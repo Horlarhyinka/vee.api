@@ -2,10 +2,12 @@
   "name": "vee_api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "Dev": "nodemon /src/index.ts"
+    "Dev": "nodemon /src/index.ts",
+    "start": "node /dist/index.jx",
+    "build": "tsc -p"
   },
   "author": "",
   "license": "ISC",
