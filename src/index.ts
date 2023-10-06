@@ -18,10 +18,11 @@ import path from "path";
 dotenv.config()
 
 const app: express.Application = express();
-const server = createServer({
-    key: fs.readFileSync(path.resolve(__dirname, "../cert/key.pem")),
-    cert: fs.readFileSync(path.resolve(__dirname, "../cert/cert.pem")),
-},app);
+// const server = createServer({
+//     key: fs.readFileSync(path.resolve(__dirname, "../cert/key.pem")),
+//     cert: fs.readFileSync(path.resolve(__dirname, "../cert/cert.pem")),
+// },app);
+const server = createServer(app)
 
 app.set("trust proxy", false)
 
